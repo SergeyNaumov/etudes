@@ -76,7 +76,7 @@ Vue.component('autocomplete-place', {
     go_ajax(){
       
       axios.get(
-        this.ajax_action+'&term='+this.in_value
+        this.ajax_action+( (this.ajax_action.indexOf('?')>-1)?'&':'?')+'term='+this.in_value
       ).then(
         r=>{
           let d=r.data
