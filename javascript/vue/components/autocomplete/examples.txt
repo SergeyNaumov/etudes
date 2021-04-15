@@ -1,0 +1,42 @@
+
+
+Пример использования:
+
+<autocomplete-place
+    :updater="set_delivery_city_id"
+    :multi="true"
+    ajax_action='/ajax-controller'
+    :only_text="false"
+    placeholder="Введите название города / региона"
+    v-model="delivery_city_id"
+/>
+
+updater -- метод в который будет передано значение после выбора (не обязательно)
+multi -- выбор нескольких значений
+v-model -- куда сохраняем значение
+
+ajax_action -- url, в который будет отправляться ajax-запрос вида: [url]?term=[значение]
+Данный контроллер должен вернуть значение в формате JSON:
+{
+    success:true,
+    list:[
+        {value:'1',header:'Perl'},
+        {value:'2',header:'Python'},
+        {value:'3',header:'Javascript'},
+        {value:'4',header:'Java'},
+        {value:'5',header:'TypeScript'},
+        {value:'6',header:'Rubi'},
+    ]
+}
+
+
+В качестве value может быть не только строка, но и объект:
+{
+    success:true,
+    list:[
+        {value:{region_id:33, city_id:77},header:'Москва'},
+        {value:{region_id:34, city_id:98},header:'Санкт-Петербург'},
+        ....
+
+    ]
+}
