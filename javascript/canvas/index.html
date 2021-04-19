@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas</title>
+    <style>
+        canvas {border: 1px solid gray; display: inline-block;}
+        .rightpanel {
+            display: inline-block; position: relative: right: 10px; border: 1px solid green; vertical-align: top;
+            font-size: 10pt;
+            padding: 10px;
+            width: 200px;
+        } 
+        .fn {margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+            
+            <canvas id="graph" :width="width" :height="height">
+            </canvas>
+        
+    
+        <div class="rightpanel">
+            minx: {{min_x}}
+            <p><a href="" @click.prevent="draw_rectangles">draw_rectangles</a> | <a href="" @click.prevent="clear">clear</a></p>
+            <p>
+                y=<input type="text" v-model="fn" class="fn">
+                <button @click="draw_graph">построить</button>
+                <div class="examples">
+                    <div v-for="e in examples">
+                        <a href="" @click.prevent="fn=e.value">y=<span v-html="e.name"></span></a>
+                    </div>
+                </div>
+            </p>
+            <p>
+                масштаб: <input type="number" v-model="size" class="fn" @change="draw_graph">
+            </p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+        function sin(x){
+            return Math.sin(x)
+        }
+        function cos(x){
+            return Math.cos(x)
+        }
+        var canvas;
+        var app=new Vue({
+            el:'#app',
+            data:{
+                ready:false,
+                width: 800,
+                height: 800,
+                fn:'x*x',
+                ctx: {},
+                size:50, // масштаб
+                examples:[
+                    {name:'x^2',value:'x**2'},
+                    {name:'x<sup>3</sup>',value:'x**3'},
+                    {name:'sin(x)',value:'Math.sin(x)'}
+                ]
+            },
+            created(){
+                this.init()
+            },
+            computed:{
+                min_x(){
+                    return -(this.x0 / this.size)
+                },
+                max_x(){
+                    return (this.x0 / this.size)
+                },
+                min_y(){
+                    return -(this.y0 / this.size)
+                },
+                max_y(){
+                    return (this.y0 / this.size)
+                },
+                x0(){
+                    return this.width / 2
+                },
+                y0(){
+                    return this.height / 2
+                }
+            },
+            methods:{
+                plot(x,y){ // точка
+                    let ctx=this.ctx
+                    ctx.strokeStyle='#f00'
+                    ctx.beginPath();
+                    
+                    ctx.moveTo(this.x0+(x*this.size), this.y0-(y*this.size)-1)
+
+                    ctx.lineTo(this.x0+(x*this.size-1), this.y0-(y*this.size))
+                    ctx.stroke()
+
+                    /*ctx.arc(this.x0+x*this.size, this.y0-y*this.size, 1, 0, 2 * Math.PI, true);
+                    ctx.stroke()*/
+                    /*ctx.moveTo(this.x0+x*this.size, this.y0-y*this.size)
+                    ctx.lineTo(this.x0+x*this.size, this.y0-y*this.size)
+                    ctx.stroke()*/
+                },
+                init(){
+                    setTimeout(
+                         ()=>{
+                            canvas=document.getElementById('graph');
+                            this.ctx = canvas.getContext('2d');
+                            this.coords()
+
+                         },
+                         
+                    )
+
+
+                },
+                draw_rectangles(){
+                    let ctx=this.ctx
+                    ctx.fillStyle = 'rgb(200, 0, 0)';
+                    ctx.fillRect(10, 10, 50, 50);
+
+                    ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+                    ctx.fillRect(30, 30, 50, 50);
+                },
+                draw_graph(){
+                    this.clear()
+                    this.coords()
+                    let x = this.min_x
+                    while(x<this.max_x){
+                        let y=eval(this.fn)
+                        x+=0.01
+                        this.plot(x,y)
+                    }
+                },
+                coords(){ // рисуем координатную сетку
+                    let ctx=this.ctx
+                    ctx.strokeStyle='#00f'
+                    ctx.moveTo(0, this.y0);
+                    ctx.lineTo(this.width, this.y0)
+                    ctx.moveTo(this.x0, 0);
+                    ctx.lineTo(this.x0, this.height)
+                    ctx.stroke()
+                    return 
+                    let y=1
+                    while(y<this.max_y){
+                        console.log('y:',y);
+                        y+=1;
+                    }
+
+                },
+                clear(){
+                    let ctx=this.ctx
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+        });
+
+        
+        
+
+
+
+    </script>
+</body>
+</html>
