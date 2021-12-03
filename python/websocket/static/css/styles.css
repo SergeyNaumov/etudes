@@ -1,0 +1,98 @@
+/* is css*/
+body {
+    margin:  0 20px 0 20px;
+    padding:  0;
+    overflow-y: none;
+}
+
+.wrapper {
+    width: 100%;
+    
+    padding: 0px;
+    border-radius: 5px;
+}
+/*.header, #sendform, .message_list {border:  1px solid red;}*/
+.header {margin:  0; }
+
+form#sendform {
+    width: 100%;
+    margin:  0;
+    padding-bottom: 30px;
+}
+form#sendform button{
+    float:  right;
+    margin-right:  2px;
+}
+
+.left_block{
+    display: inline-block;
+    width:  300px;
+    min-height: 500px;
+    height: 100%;
+    float:  left;
+    border:  1px solid red;
+}
+.right_block{
+    display: inline-block;
+    width: calc(100% - 500px);
+    float: left;
+    margin-left: 50px;
+    height: 100%;
+}
+
+
+.message_list {
+    padding-right:  20px;
+    padding-left:  20px;
+    height: 2000px;
+    overflow-y: auto;
+}
+.message_list .item{
+    border:  1px solid gray;
+    padding:  5px 5px 10px 5px;
+    border-radius: 5px;
+    min-width: 50%;
+    float: left;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.message_list .item .ts {
+    text-align:  right; color:  blue; font-size:  11px;
+}
+.message_list .item .name{
+    font-family: Times;
+    padding-bottom:  5px;
+    display: inline-block;
+}
+.message_list .item .message{
+    display: inline-block;
+}
+
+.message_list .item.its_me{
+    background-color:  #e0ffe3;
+    position:  static;
+    float:  right;
+}
+#messageText {
+    width: calc(100% - 8px); height: 100px;
+    resize: none;
+}
+
+
+#app {height: 100%;}
+@media (max-width:  1000px){
+    h1 {font-size: 32pt;}
+    body, button {
+        font-size: 22pt;
+    }
+
+    .message_list .item {
+        min-width: 80%;
+        font-size: 22pt;
+    }
+}
+@media (min-width:  1024px){
+
+
+}
