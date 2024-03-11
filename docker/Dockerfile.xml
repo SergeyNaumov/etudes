@@ -1,0 +1,15 @@
+# Используем официальный образ MySQL
+FROM mysql:latest
+
+# Устанавливаем переменную окружения для пароля root пользователя MySQL
+ENV MYSQL_ROOT_PASSWORD=my-secret-pw
+
+# Пробрасываем порт 3306 на стандартный порт
+EXPOSE 3306
+
+# Указываем, чтобы MySQL использовал /home/mysql вместо /var/lib/mysql
+VOLUME /home/mysql:/var/lib/mysql
+
+# Запускаем MySQL с указанными параметрами
+CMD ["mysqld"]
+
